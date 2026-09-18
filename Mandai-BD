@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mandai BD — Shop. Save. Smile.</title>
+  <meta name="description" content=" Mandai BD — Your trusted online shopping center for electronics, fashion, gadgets, computer and phone accessories.">
+  <style>
+    : root{
+      --gold:#d6a63b;
+      --gold2:#f2cf72;
+      --black:#0b0b0d;
+      --dark:#151518;
+      --cream:#faf7ef;
+      --white:#fff;
+      --muted:#777;
+      --border:#e8e3d7;
+      --shadow:0 12px 35px rgba(0,0,0,.10);
+      --radius:18px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:Arial,Helvetica,sans-serif;background:#fff;color:#161616;line-height:1.5}
+    a{text-decoration:none;color:inherit}
+    button,input{font:inherit}
+    .topbar{background:var(--black);color:#fff;text-align:center;padding:8px 15px;font-size:13px}
+    .topbar b{color:var(--gold2)}
+    header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+    .nav{max-width:1200px;margin:auto;height:74px;display:flex;align-items:center;gap:25px;padding:0 18px}
+    .brand{display:flex;align-items:center;gap:10px;min-width:max-content}
+    .brand-logo{width:47px;height:47px;border-radius:50%;object-fit:cover;background:#111;border:2px solid var(--gold)}
+    .brand-text strong{display:block;font-size:22px;letter-spacing:3px;line-height:1}
+    .brand-text small{font-size:9px;color:#777;letter-spacing:2px}
+    .search{flex:1;position:relative;max-width:520px;margin-left:auto}
+    .search input{width:100%;padding:13px 48px 13px 18px;border:1px solid var(--border);border-radius:30px;outline:none;background:#fafafa}
+    .search input:focus{border-color:var(--gold)}
+    .search button{position:absolute;right:5px;top:5px;width:37px;height:37px;border:0;border-radius:50%;background:var(--black);color:#fff;cursor:pointer}
+    .nav-actions{display:flex;gap:8px;align-items:center}
+    .icon-btn{border:1px solid var(--border);background:#fff;border-radius:12px;padding:10px 13px;cursor:pointer;position:relative}
+    .cart-count{position:absolute;right:-5px;top:-7px;background:var(--gold);color:#111;border-radius:50%;font-size:11px;width:20px;height:20px;display:grid;place-items:center;font-weight:bold}
+    .hero{background:linear-gradient(120deg,#0a0a0c 0%,#17130b 55%,#080808 100%);color:#fff;min-height:500px;display:flex;align-items:center;overflow:hidden}
+    .hero-inner{max-width:1200px;width:100%;margin:auto;padding:70px 18px;display:grid;grid-template-columns:1.1fr .9fr;gap:45px;align-items:center}
+    .eyebrow{display:inline-block;border:1px solid rgba(242,207,114,.35);color:var(--gold2);padding:7px 13px;border-radius:30px;font-size:12px;letter-spacing:1.5px;margin-bottom:20px}
+    .hero h1{font-size:clamp(42px,6vw,72px);line-height:1.02;margin-bottom:18px}
+    .hero h1 span{color:var(--gold2)}
+    .hero p{color:#d0d0d0;max-width:560px;font-size:17px;margin-bottom:28px}
+    .hero-buttons{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:13px 20px;font-weight:bold;cursor:pointer}
+    .btn-gold{background:var(--gold);color:#111}
+    .btn-light{background:#fff;color:#111}
+    .hero-card{min-height:350px;border:1px solid rgba(255,255,255,.12);border-radius:28px;background:radial-gradient(circle at 50% 40%,rgba(214,166,59,.24),transparent 55%),#111;display:grid;place-items:center;position:relative;box-shadow:0 30px 70px rgba(0,0,0,.35)}
+    .hero-logo{width:210px;height:210px;border-radius:50%;border:2px solid var(--gold);object-fit:cover;background:#050505;box-shadow:0 0 60px rgba(214,166,59,.25)}
+    .hero-card .tag{position:absolute;bottom:28px;background:#fff;color:#111;padding:10px 18px;border-radius:30px;font-weight:bold}
+    section{padding:70px 18px}
+    .container{max-width:1200px;margin:auto}
+    .section-head{text-align:center;margin-bottom:35px}
+    .section-head h2{font-size:34px;margin-bottom:7px}
+    .section-head p{color:var(--muted)}
+    .categories{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+    .cat{background:var(--cream);border:1px solid var(--border);padding:20px 10px;border-radius:16px;text-align:center;cursor:pointer;transition:.2s}
+    .cat:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#d9bd73}
+    .cat .emoji{font-size:28px;display:block;margin-bottom:8px}
+    .cat b{font-size:13px}
+    .products-wrap{background:#fafafa}
+    .toolbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:25px;flex-wrap:wrap}
+    .chips{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{padding:9px 14px;border:1px solid var(--border);background:#fff;border-radius:30px;cursor:pointer}
+    .chip.active,.chip:hover{background:var(--black);color:#fff;border-color:var(--black)}
+    .sort{padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:#fff}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+    .product{background:#fff;border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:.25s;position:relative}
+    .product:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+    .product-img{height:235px;background:#f2f0eb;display:grid;place-items:center;overflow:hidden;position:relative}
+    .product-img img{width:100%;height:100%;object-fit:cover}
+    .product-placeholder{font-size:58px}
+    .badge{position:absolute;left:12px;top:12px;background:var(--black);color:#fff;padding:5px 9px;border-radius:7px;font-size:11px}
+    .product-info{padding:15px}
+    .product-cat{font-size:11px;color:#a17b24;text-transform:uppercase;font-weight:bold;letter-spacing:.8px}
+    .product h3{font-size:16px;margin:5px 0 8px}
+    .price{font-size:19px;font-weight:800}
+    .old-price{font-size:12px;color:#999;text-decoration:line-through;margin-left:5px}
+    .product-actions{display:flex;gap:8px;margin-top:13px}
+    .add{flex:1;padding:10px;border:0;border-radius:10px;background:var(--black);color:#fff;cursor:pointer;font-weight:bold}
+    .buy{padding:10px 12px;border:1px solid var(--gold);border-radius:10px;background:#fff;cursor:pointer}
+    .why{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .why-card{padding:25px;border:1px solid var(--border);border-radius:18px;background:#fff}
+    .why-card .big{font-size:30px}
+    .why-card h3{margin:10px 0 5px}
+    .why-card p{color:var(--muted);font-size:14px}
+    .newsletter{background:var(--black);color:#fff;border-radius:25px;padding:45px;display:flex;align-items:center;justify-content:space-between;gap:30px}
+    .newsletter p{color:#bbb}
+    .newsletter-form{display:flex;gap:8px;width:420px;max-width:100%}
+    .newsletter-form input{flex:1;padding:13px;border-radius:10px;border:0;outline:none}
+    footer{background:#0b0b0d;color:#ccc;padding:55px 18px 25px}
+    .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:35px}
+    footer h3,footer h4{color:#fff;margin-bottom:13px}
+    footer p,footer a{font-size:14px;color:#aaa}
+    footer a{display:block;margin:8px 0}
+    .footer-bottom{border-top:1px solid #292929;margin-top:35px;padding-top:18px;text-align:center;font-size:12px;color:#777}
+    .cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:80;display:none}
+    .cart-overlay.show{display:block}
+    .cart{position:absolute;right:0;top:0;height:100%;width:420px;max-width:94vw;background:#fff;padding:22px;display:flex;flex-direction:column}
+    .cart-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding-bottom:15px}
+    .close{border:0;background:#eee;border-radius:9px;width:35px;height:35px;cursor:pointer}
+    .cart-items{flex:1;overflow:auto;padding:15px 0}
+    .cart-item{display:grid;grid-template-columns:65px 1fr auto;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid #eee}
+    .cart-thumb{width:65px;height:65px;border-radius:10px;background:#f2f0eb;display:grid;place-items:center;font-size:25px;overflow:hidden}
+    .cart-thumb img{width:100%;height:100%;object-fit:cover}
+    .cart-item h4{font-size:14px}
+    .qty{display:flex;align-items:center;gap:7px;margin-top:6px}
+    .qty button{width:24px;height:24px;border:1px solid var(--border);background:#fff;border-radius:5px;cursor:pointer}
+    .remove{border:0;background:none;color:#999;cursor:pointer;font-size:12px}
+    .cart-foot{border-top:1px solid var(--border);padding-top:15px}
+    .total{display:flex;justify-content:space-between;font-size:20px;font-weight:bold;margin-bottom:12px}
+    .full{width:100%}
+    .empty{text-align:center;color:#888;padding:50px 10px}
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:90;display:none;place-items:center;padding:20px}
+    .modal-overlay.show{display:grid}
+    .modal{background:#fff;border-radius:20px;width:700px;max-width:100%;max-height:90vh;overflow:auto;padding:25px}
+    .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+    .order-form{display:grid;gap:12px}
+    .order-form label{font-size:13px;font-weight:bold}
+    .order-form input,.order-form textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;outline:none}
+    .order-form textarea{min-height:90px;resize:vertical}
+    .notice{background:#fff8df;border:1px solid #ead79a;padding:12px;border-radius:10px;font-size:13px}
+    .no-results{text-align:center;padding:50px;color:#777;grid-column:1/-1}
+    @media(max-width:950px){
+      .categories{grid-template-columns:repeat(3,1fr)}
+      .grid{grid-template-columns:repeat(3,1fr)}
+      .why{grid-template-columns:repeat(2,1fr)}
+      .hero-inner{grid-template-columns:1fr}
+      .hero-card{display:none}
+      .footer-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:700px){
+      .nav{height:auto;min-height:70px;flex-wrap:wrap;padding:10px 12px}
+      .search{order:3;flex-basis:100%;max-width:none;margin:0 0 5px}
+      .brand-text strong{font-size:18px}
+      .grid{grid-template-columns:repeat(2,1fr);gap:12px}
+      .product-img{height:180px}
+      .categories{grid-template-columns:repeat(2,1fr)}
+      .newsletter{padding:28px;display:block}
+      .newsletter-form{margin-top:20px}
+      .footer-grid{grid-template-columns:1fr}
+      section{padding:50px 14px}
+    }
+    @media(max-width:430px){
+      .grid{grid-template-columns:1fr}
+      .product-img{height:230px}
+      .hero h1{font-size:42px}
+      .nav-actions .hide-mobile{display:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">🚚 Fast Delivery • 💬 Order by WhatsApp • <b>Shop. Save. Smile.</b></div>
+
+  <header>
+    <nav class="nav">
+      <a class="brand" href="#">
+        <!-- EASY LOGO: upload logo.png beside index.html -->
+        <img class="brand-logo" src="logo.png" alt="Mandai BD Logo" onerror="this.style.display='none'">
+        <div class="brand-text"><strong>MANDAI</strong><small>ONLINE SHOPPING CENTER</small></div>
+      </a>
+
+      <div class="search">
+        <input id="searchInput" type="search" placeholder="Search products..." oninput="renderProducts()">
+        <button onclick="renderProducts()">⌕</button>
+      </div>
+
+      <div class="nav-actions">
+        <button class="icon-btn hide-mobile" onclick="document.getElementById('products').scrollIntoView()">🛍️ Shop</button>
+        <button class="icon-btn" onclick="openCart()">🛒<span id="cartCount" class="cart-count">0</span></button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <span class="eyebrow">YOUR TRUSTED ONLINE SHOPPING CENTER</span>
+          <h1>Shop <span>Smart.</span><br>Live Better.</h1>
+          <p>Discover electronics, fashion, gadgets, computer & phone accessories and more — all in one place.</p>
+          <div class="hero-buttons">
+            <a href="#products" class="btn btn-gold">🛍️ Shop Now</a>
+            <a href="https://www.facebook.com/mandaibd" target="_blank" class="btn btn-light">f Facebook Page</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <img class="hero-logo" src="logo.png" alt="Mandai BD" onerror="this.style.display='none'">
+          <div class="tag">Shop. Save. Smile.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <h2>Shop by Category</h2>
+          <p>Find what you need, faster.</p>
+        </div>
+        <div class="categories">
+          <div class="cat" onclick="filterCategory('Electronics')"><span class="emoji">📺</span><b>Electronics</b></div>
+          <div class="cat" onclick="filterCategory('Fashion')"><span class="emoji">👕</span><b>Fashion</b></div>
+          <div class="cat" onclick="filterCategory('Gadgets')"><span class="emoji">🎧</span><b>Gadgets</b></div>
+          <div class="cat" onclick="filterCategory('Computer')"><span class="emoji">💻</span><b>Computer</b></div>
+          <div class="cat" onclick="filterCategory('Phone')"><span class="emoji">📱</span><b>Phone Accessories</b></div>
+          <div class="cat" onclick="filterCategory('Home')"><span class="emoji">🏠</span><b>Home & Lifestyle</b></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="products" class="products-wrap">
+      <div class="container">
+        <div class="section-head">
+          <h2>Featured Products</h2>
+          <p>Update the product list from one simple place in the code.</p>
+        </div>
+
+        <div class="toolbar">
+          <div class="chips">
+            <button class="chip active" onclick="filterCategory('All',this)">All</button>
+            <button class="chip" onclick="filterCategory('Electronics',this)">Electronics</button>
+            <button class="chip" onclick="filterCategory('Fashion',this)">Fashion</button>
+            <button class="chip" onclick="filterCategory('Gadgets',this)">Gadgets</button>
+            <button class="chip" onclick="filterCategory('Computer',this)">Computer</button>
+            <button class="chip" onclick="filterCategory('Phone',this)">Phone</button>
+          </div>
+          <select id="sortSelect" class="sort" onchange="renderProducts()">
+            <option value="default">Sort: Featured</option>
+            <option value="low">Price: Low to High</option>
+            <option value="high">Price: High to Low</option>
+          </select>
+        </div>
+
+        <div id="productGrid" class="grid"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <h2>Why Shop With Mandai?</h2>
+          <p>Simple shopping, helpful service.</p>
+        </div>
+        <div class="why">
+          <div class="why-card"><div class="big">✅</div><h3>Quality Products</h3><p>We aim to provide quality products at reasonable prices.</p></div>
+          <div class="why-card"><div class="big">🚚</div><h3>Fast Delivery</h3><p>Get your order delivered to your doorstep.</p></div>
+          <div class="why-card"><div class="big">🤝</div><h3>Trusted Service</h3><p>Customer support through our social channels.</p></div>
+          <div class="why-card"><div class="big">💬</div><h3>Easy Ordering</h3><p>Add products to cart and send your order through WhatsApp.</p></div>
+        </div>
+
+        <div class="newsletter" style="margin-top:55px">
+          <div><h2>Need help choosing a product?</h2><p>Send us a message and our team can help.</p></div>
+          <a class="btn btn-gold" href="https://www.facebook.com/mandaibd" target="_blank">Message Mandai BD</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3>MANDAI</h3>
+          <p>Shop. Save. Smile.</p>
+          <p style="margin-top:10px">Your trusted online shopping center for everyday products, gadgets, electronics, fashion and accessories.</p>
+        </div>
+        <div><h4>Shop</h4><a href="#products" onclick="filterCategory('Electronics')">Electronics</a><a href="#products" onclick="filterCategory('Fashion')">Fashion</a><a href="#products" onclick="filterCategory('Gadgets')">Gadgets</a><a href="#products" onclick="filterCategory('Computer')">Computer</a></div>
+        <div><h4>Support</h4><a href="#products">All Products</a><a href="#" onclick="openCart();return false">My Cart</a><a href="https://www.facebook.com/mandaibd" target="_blank">Facebook</a></div>
+        <div><h4>Contact</h4><p>📩 Order via Facebook Inbox</p><p style="margin-top:8px">📱 WhatsApp: ADD-YOUR-NUMBER</p><p style="margin-top:8px">🇧🇩 Bangladesh</p></div>
+      </div>
+      <div class="footer-bottom">© <span id="year"></span> Mandai BD. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- CART -->
+  <div id="cartOverlay" class="cart-overlay" onclick="if(event.target===this)closeCart()">
+    <aside class="cart">
+      <div class="cart-head"><h2>Your Cart</h2><button class="close" onclick="closeCart()">✕</button></div>
+      <div id="cartItems" class="cart-items"></div>
+      <div class="cart-foot">
+        <div class="total"><span>Total</span><span id="cartTotal">৳0</span></div>
+        <button class="btn btn-gold full" onclick="openCheckout()">📦 Order on WhatsApp</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- CHECKOUT -->
+  <div id="checkoutOverlay" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-head"><h2>Complete Your Order</h2><button class="close" onclick="closeCheckout()">✕</button></div>
+      <div class="notice">Your order will open in WhatsApp with the product list and customer details.</div>
+      <form class="order-form" onsubmit="sendWhatsApp(event)" style="margin-top:15px">
+        <div><label>Your Name</label><input id="customerName" required placeholder="Enter your name"></div>
+        <div><label>Phone Number</label><input id="customerPhone" required placeholder="01XXXXXXXXX"></div>
+        <div><label>Delivery Address</label><textarea id="customerAddress" required placeholder="House, road, area, district..."></textarea></div>
+        <div><label>Note (optional)</label><input id="customerNote" placeholder="Color/size or other note"></div>
+        <button class="btn btn-gold full" type="submit">Send Order to WhatsApp</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    /*
+      ===========================
+      MANDАI BD EASY PRODUCT AREA
+      ===========================
+      Add/edit products ONLY in this list.
+
+      image: Put your product image in the SAME folder as index.html.
+      Example: "earbuds.jpg"
+      If image is empty, an emoji placeholder will appear.
+
+      price: use number only, without ৳.
+    */
+    const products = [
+      {id:1,name:"Wireless Bluetooth Earbuds",category:"Gadgets",price:1290,oldPrice:1590,emoji:"🎧",image:"",badge:"Popular"},
+      {id:2,name:"Fast Charging Power Bank",category:"Phone",price:1490,oldPrice:1790,emoji:"🔋",image:"",badge:"New"},
+      {id:3,name:"Premium Smart Watch",category:"Electronics",price:2390,oldPrice:2990,emoji:"⌚",image:"",badge:"Hot"},
+      {id:4,name:"RGB Gaming Mouse",category:"Computer",price:990,oldPrice:1190,emoji:"🖱️",image:"",badge:""},
+      {id:5,name:"Wireless Keyboard",category:"Computer",price:1290,oldPrice:1490,emoji:"⌨️",image:"",badge:""},
+      {id:6,name:"Type-C Fast Charging Cable",category:"Phone",price:450,oldPrice:550,emoji:"🔌",image:"",badge:""},
+      {id:7,name:"Men's Casual Premium Shirt",category:"Fashion",price:1190,oldPrice:1490,emoji:"👕",image:"",badge:"New"},
+      {id:8,name:"Portable Mini Speaker",category:"Gadgets",price:1590,oldPrice:1890,emoji:"🔊",image:"",badge:""},
+      {id:9,name:"LED Desk Lamp",category:"Home",price:890,oldPrice:1090,emoji:"💡",image:"",badge:""},
+      {id:10,name:"Wireless Game Controller",category:"Gadgets",price:1790,oldPrice:2190,emoji:"🎮",image:"",badge:"Hot"},
+      {id:11,name:"Phone Stand",category:"Phone",price:390,oldPrice:490,emoji:"📱",image:"",badge:""},
+      {id:12,name:"USB Hub 4-Port",category:"Computer",price:790,oldPrice:950,emoji:"🔌",image:"",badge:""}
+    ];
+
+    let selectedCategory = "All";
+    let cart = JSON.parse(localStorage.getItem("mandaiCart") || "[]");
+
+    function money(n){ return "৳" + Number(n).toLocaleString("en-BD"); }
+
+    function renderProducts(){
+      const q = document.getElementById("searchInput").value.toLowerCase().trim();
+      const sort = document.getElementById("sortSelect").value;
+      let list = products.filter(p =>
+        (selectedCategory === "All" || p.category === selectedCategory) &&
+        (p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q))
+      );
+      if(sort==="low") list.sort((a,b)=>a.price-b.price);
+      if(sort==="high") list.sort((a,b)=>b.price-a.price);
+
+      const grid = document.getElementById("productGrid");
+      if(!list.length){
+        grid.innerHTML = '<div class="no-results">No products found. Try another search.</div>';
+        return;
+      }
+      grid.innerHTML = list.map(p=>`
+        <article class="product">
+          <div class="product-img">
+            ${p.image ? `<img src="${p.image}" alt="${escapeHtml(p.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">` : ""}
+            <div class="product-placeholder" style="${p.image?'display:none':''}">${p.emoji}</div>
+            ${p.badge ? `<span class="badge">${p.badge}</span>` : ""}
+          </div>
+          <div class="product-info">
+            <div class="product-cat">${p.category}</div>
+            <h3>${escapeHtml(p.name)}</h3>
+            <div><span class="price">${money(p.price)}</span> ${p.oldPrice ? `<span class="old-price">${money(p.oldPrice)}</span>` : ""}</div>
+            <div class="product-actions">
+              <button class="add" onclick="addToCart(${p.id})">Add to Cart</button>
+              <button class="buy" onclick="buyNow(${p.id})">Buy</button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+    }
+
+    function filterCategory(cat, el){
+      selectedCategory = cat;
+      document.querySelectorAll(".chip").forEach(x=>x.classList.remove("active"));
+      if(el) el.classList.add("active");
+      else {
+        const chip=[...document.querySelectorAll(".chip")].find(x=>x.textContent.trim()===cat);
+        if(chip) chip.classList.add("active");
+      }
+      document.getElementById("products").scrollIntoView({behavior:"smooth"});
+      renderProducts();
+    }
+
+    function addToCart(id){
+      const item=cart.find(x=>x.id===id);
+      if(item) item.qty++;
+      else cart.push({id,qty:1});
+      saveCart(); openCart();
+    }
+
+    function buyNow(id){
+      addToCart(id);
+    }
+
+    function saveCart(){
+      localStorage.setItem("mandaiCart",JSON.stringify(cart));
+      renderCart();
+    }
+
+    function renderCart(){
+      const count=cart.reduce((sum,x)=>sum+x.qty,0);
+      document.getElementById("cartCount").textContent=count;
+      const box=document.getElementById("cartItems");
+      if(!cart.length){
+        box.innerHTML='<div class="empty">🛒<br><br>Your cart is empty.</div>';
+        document.getElementById("cartTotal").textContent=money(0);
+        return;
+      }
+      let total=0;
+      box.innerHTML=cart.map(item=>{
+        const p=products.find(x=>x.id===item.id);
+        const sub=p.price*item.qty; total+=sub;
+        return `<div class="cart-item">
+          <div class="cart-thumb">${p.image?`<img src="${p.image}" alt="">`:p.emoji}</div>
+          <div><h4>${escapeHtml(p.name)}</h4><div>${money(p.price)}</div>
+            <div class="qty"><button onclick="changeQty(${p.id},-1)">−</button><b>${item.qty}</b><button onclick="changeQty(${p.id},1)">+</button></div>
+          </div>
+          <button class="remove" onclick="removeCart(${p.id})">Remove</button>
+        </div>`;
+      }).join("");
+      document.getElementById("cartTotal").textContent=money(total);
+    }
+
+    function changeQty(id,delta){
+      const item=cart.find(x=>x.id===id);
+      if(!item)return;
+      item.qty+=delta;
+      if(item.qty<=0) cart=cart.filter(x=>x.id!==id);
+      saveCart();
+    }
+
+    function removeCart(id){
+      cart=cart.filter(x=>x.id!==id);
+      saveCart();
+    }
+
+    function openCart(){ document.getElementById("cartOverlay").classList.add("show"); renderCart(); }
+    function closeCart(){ document.getElementById("cartOverlay").classList.remove("show"); }
+    function openCheckout(){
+      if(!cart.length){alert("Your cart is empty.");return;}
+      closeCart();
+      document.getElementById("checkoutOverlay").classList.add("show");
+    }
+    function closeCheckout(){document.getElementById("checkoutOverlay").classList.remove("show");}
+
+    function sendWhatsApp(e){
+      e.preventDefault();
+
+      /*
+        IMPORTANT:
+        Replace 8801XXXXXXXXX below with your real WhatsApp number.
+        Example Bangladesh format: 88017XXXXXXXX (no +, no spaces).
+      */
+      const whatsappNumber = "8801XXXXXXXXX";
+
+      const name=document.getElementById("customerName").value.trim();
+      const phone=document.getElementById("customerPhone").value.trim();
+      const address=document.getElementById("customerAddress").value.trim();
+      const note=document.getElementById("customerNote").value.trim();
+
+      let total=0;
+      let lines=cart.map(item=>{
+        const p=products.find(x=>x.id===item.id);
+        total += p.price*item.qty;
+        return `• ${p.name} × ${item.qty} — ${money(p.price*item.qty)}`;
+      }).join("%0A");
+
+      const message =
+        `*New Order — Mandai BD*%0A%0A`+
+        `*Products:*%0A${lines}%0A%0A`+
+        `*Total:* ${money(total)}%0A%0A`+
+        `*Customer:* ${encodeURIComponent(name)}%0A`+
+        `*Phone:* ${encodeURIComponent(phone)}%0A`+
+        `*Address:* ${encodeURIComponent(address)}%0A`+
+        (note ? `*Note:* ${encodeURIComponent(note)}%0A` : "");
+
+      if(whatsappNumber.includes("X")){
+        alert("First, replace 8801XXXXXXXXX in the code with your real WhatsApp number.");
+        return;
+      }
+      window.open(`https://wa.me/${whatsappNumber}?text=${message}`,"_blank");
+    }
+
+    document.getElementById("year").textContent=new Date().getFullYear();
+    renderProducts();
+    renderCart();
+  </script>
+</body>
+</html>
